@@ -1,14 +1,14 @@
 let bikerIdle = new Image()
-bikerIdle.src = "/images/1 Biker/Biker_idle.png"
+bikerIdle.src = "./images/1 Biker/Biker_idle.png"
 
 let bikerIdleLeft = new Image()
-bikerIdleLeft.src = "/images/1 Biker/Biker_idle_left.png"
+bikerIdleLeft.src = "./images/1 Biker/Biker_idle_left.png"
 
 let heart = new Image()
-heart.src = "/images/pngwing.com (2).png"
+heart.src = "./images/pngwing.com (2).png"
 
 let paper = new Image()
-paper.src = "/images/paper.png"
+paper.src = "./images/paper.png"
 
 let load = 0
 let game = {
