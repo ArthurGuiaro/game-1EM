@@ -373,9 +373,9 @@ function showResult(boolean) {
     result.style.display = "none"
     
     paperStatus = false
+    checkResult()
     if (papers.length < 4 && player.hp > 0) drawQuestion()
     console.log(papers)
-  checkResult()
 }, 2000)
 papers.shift()
 
