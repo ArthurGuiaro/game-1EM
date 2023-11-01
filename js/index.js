@@ -118,7 +118,7 @@ function checkResult() {
     square.style.display = "none"
     setTimeout(() => {
       text1.innerHTML = "¡Tú perdiste!"
-      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini, Lucas Gentil e Márcio."
+      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini e Lucas Gentil."
       
       clearInterval(interval)
     }, 2000)
@@ -144,7 +144,7 @@ function checkResult() {
   }
 
   
-}
+} 
 
 function startBattle() {
   let status = player.crash(firstBoss)
