@@ -114,10 +114,11 @@ let i = 0
 
 function checkResult() {
   console.log("oi")
-  if (player.hp <= 0) {
+  if (player.hp <= 0 ) {
     square.style.display = "none"
     setTimeout(() => {
-      text1.innerHTML = "voce perdeu"
+      text1.innerHTML = "¡Tú perdiste!"
+      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini, Lucas Gentil e Márcio."
       
       clearInterval(interval)
     }, 2000)
@@ -128,11 +129,11 @@ function checkResult() {
     }, 100)
   }
   
-  if ((papers.length === 0 && player.hp > 0) || firstBoss.hp <= 0) {
+  if ((papers.length === 0 && player.hp > 0) || (firstBoss.hp <= 0 )) {
     square.style.display = "none"
     setTimeout(() => {
-      text1.innerHTML = "parabens, voce ganhou"
-
+      text1.innerHTML = "¡Felicidades, ganaste!"
+      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini, Lucas Gentil e Márcio."
       clearInterval(interval)
     }, 2000)
     interval = setInterval(() => {
@@ -141,6 +142,8 @@ function checkResult() {
 
     }, 100)
   }
+
+  
 }
 
 function startBattle() {
@@ -178,8 +181,8 @@ function prepareBatlle() {
 
 function showTexts() {
   console.log("oi")
-  text1.innerHTML = "Se prepare..."
-  setTimeout(() => text1.innerHTML = "A batalha irá começar em:", 1000)
+  text1.innerHTML = "Preparate..."
+  setTimeout(() => text1.innerHTML = "La batalla comenzará en:", 1000)
   setTimeout(() => text2.innerHTML = "3", 2000)
   setTimeout(() => text2.innerHTML = "2", 3000)
   setTimeout(() => text2.innerHTML = "1", 4000)
@@ -344,7 +347,7 @@ function checkAnswer(alternative) {
   else {
     showResult(false)
     if (papers.length > 3) player.hp -= 1
-    else { player.hp -= 3 }
+    else { player.hp -= 5 }
     
   }
   
