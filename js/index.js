@@ -93,11 +93,11 @@ class Character {
       }
     }
   }
-  
+
   draw() {
-    
+
     game.ctx.drawImage(this.image, this.start, this.spriteHeigth, this.spriteWidth, 58, this.x, this.y, this.width, this.height)
-    
+
   }
 }
 
@@ -111,25 +111,28 @@ let text1 = document.querySelector("#text-1")
 let text2 = document.querySelector("#text-2")
 let interval = null
 let i = 0
+let end = false
 
 function checkResult() {
-  console.log("oi")
-  if (player.hp <= 0 ) {
-    square.style.display = "none"
+  
+  if (player.hp <= 0) {
     setTimeout(() => {
       text1.innerHTML = "¡Tú perdiste!"
       text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini e Lucas Gentil."
-      
+
       clearInterval(interval)
     }, 2000)
     interval = setInterval(() => {
       i += 0.05
       blackSquare.style.backgroundColor = `rgba(0, 0, 0, ${i})`
-      
+
     }, 100)
+    end = true
+    square.style.display = "none"
   }
-  
-  if ((papers.length === 0 && player.hp > 0) || (firstBoss.hp <= 0 )) {
+
+  if ((papers.length === 0 && player.hp > 0) || (firstBoss.hp <= 0)) {
+    end = true
     square.style.display = "none"
     setTimeout(() => {
       text1.innerHTML = "¡Felicidades, ganaste!"
@@ -143,8 +146,8 @@ function checkResult() {
     }, 100)
   }
 
-  
-} 
+
+}
 
 function startBattle() {
   let status = player.crash(firstBoss)
@@ -153,7 +156,7 @@ function startBattle() {
 
 
   if (status) {
-    console.log("start")
+    
     prepareBatlle()
   }
 }
@@ -164,10 +167,10 @@ function prepareBatlle() {
   firstBoss.x = 500
   isBattling = true
   setTimeout(() => {
-    console.log("tchau")
+    
     showTexts()
     clearInterval(interval)
-    i= 0
+    i = 0
   }, 2000)
   interval = setInterval(() => {
     i += 0.05
@@ -180,7 +183,7 @@ function prepareBatlle() {
 }
 
 function showTexts() {
-  console.log("oi")
+  
   text1.innerHTML = "Preparate..."
   setTimeout(() => text1.innerHTML = "La batalla comenzará en:", 1000)
   setTimeout(() => text2.innerHTML = "3", 2000)
@@ -195,7 +198,7 @@ function showTexts() {
     text1.innerHTML = ""
     text2.innerHTML = ""
     blackSquare.style.display = "flex"
-    
+
   }, 6000)
 
 }
@@ -213,25 +216,25 @@ class Paper {
     this.correctAnswer = correctAnswer
     this.wrongAnswer = wrongAnswer
   }
-  
+
   top() {
     return this.y
   }
-  
+
   bottom() {
     return this.y + this.height
   }
-  
+
   left() {
     return this.x
   }
-  
+
   right() {
     return this.x + this.width
   }
-  
-  
-  
+
+
+
   newPos() {
     if (this.x + this.speedX < 10) {
       this.x = 10
@@ -240,73 +243,73 @@ class Paper {
       this.x += this.speedX
     }
     this.y += this.speedY
-    
+
   }
-  
+
   crash(obstacle) {
     return !(
       this.bottom() < obstacle.top() ||
       this.top() > obstacle.bottom() ||
       this.right() < obstacle.left() ||
       this.left() > obstacle.right()
-      )
-    }
-    
-    draw() {
-      game.ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
-    }
-    
+    )
   }
-  
-  
-  let firstPaper = new Paper(paper, 900, 450, 32, 32, "En un adelantamineto el correcto es adelantar por el lado:", "Izquierdo", "Derecho")
-  let secondPaper = new Paper(paper, 1800, 350, 32, 32, "El coche deve conducirse por el lado:", "Derecho", "Izquierdo")
-  let thirdPaper = new Paper(paper, 2700, 420, 32, 32, "El nivel de alcohol en sangre no puede exceder:", "0,5 g/l", "1,0 g/l")
-  let fourthPaper = new Paper(paper, 3600, 380, 32, 32, "La edad minima para viajar en el asiento delantero de un coche es:", "10 años", "12 años")
-  let fifthPaper = new Paper(paper, 7000, 420, 32, 32, "Accesorio que no es de uso obligatorio y cuya función es reducir el impacto del cuerpo del conductor con el vehículo, en caso de accidente, es:", "Bolsa de aire", "Cinturón de seguridad")
-  let sixthPaper = new Paper(paper, 7000, 400, 32, 32, "Si no hay freno, el procedimiento adecuado es:", "Reducir la marcha", "Tirar bruscamente del freno de mano")
-  let seventhPaper = new Paper(paper, 7000, 400, 32, 32, "Es necesario señalizar el lugar del accidente lo más rápidamente posible para:", "Prevenir la aparición de nuevos accidentes", "Obligar a otros conductores a detenerse")
-  let eighthPaper = new Paper(paper, 7000, 400, 32, 32, "El uso de teléfono en el tráfico:", "Es permitido, desde que sea una emergencia", "Prohibido")
-  let ninethPaper = new Paper(paper, 7900, 400, 32, 32, "", "", "")
-  let tenthPaper = new Paper(paper, 7500, 400, 32, 32, "", "", "")
-  
-  let papers = [firstPaper, secondPaper, thirdPaper, fourthPaper, fifthPaper, sixthPaper, seventhPaper, eighthPaper]
-  
-  function updatePapers() {
-    papers.forEach(paper => {
-      paper.newPos()
-      if (paper.x + paper.speedX < 10) {
-        backgroundImage.speed = 0
-        
-      }
-      paper.draw()
-    })
-    
+
+  draw() {
+    game.ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
   }
-  
-  function pickPaper() {
-    let status = papers.some((paper) => {
-      return player.crash(paper)
-    })
-    
-    
-    
-    if (status) {
-      if (!paperStatus) {
-        
-        drawQuestion()
-        
-      }
+
+}
+
+
+let firstPaper = new Paper(paper, 900, 450, 32, 32, "En un adelantamineto el correcto es adelantar por el lado:", "Izquierdo", "Derecho")
+let secondPaper = new Paper(paper, 1800, 350, 32, 32, "El coche deve conducirse por el lado:", "Derecho", "Izquierdo")
+let thirdPaper = new Paper(paper, 2700, 420, 32, 32, "El nivel de alcohol en sangre no puede exceder:", "0,5 g/l", "1,0 g/l")
+let fourthPaper = new Paper(paper, 3600, 380, 32, 32, "La edad minima para viajar en el asiento delantero de un coche es:", "10 años", "12 años")
+let fifthPaper = new Paper(paper, 7000, 420, 32, 32, "Accesorio que no es de uso obligatorio y cuya función es reducir el impacto del cuerpo del conductor con el vehículo, en caso de accidente, es:", "Bolsa de aire", "Cinturón de seguridad")
+let sixthPaper = new Paper(paper, 7000, 400, 32, 32, "Si no hay freno, el procedimiento adecuado es:", "Reducir la marcha", "Tirar bruscamente del freno de mano")
+let seventhPaper = new Paper(paper, 7000, 400, 32, 32, "Es necesario señalizar el lugar del accidente lo más rápidamente posible para:", "Prevenir la aparición de nuevos accidentes", "Obligar a otros conductores a detenerse")
+let eighthPaper = new Paper(paper, 7000, 400, 32, 32, "El uso de teléfono en el tráfico:", "Es permitido, desde que sea una emergencia", "Prohibido")
+let ninethPaper = new Paper(paper, 7900, 400, 32, 32, "", "", "")
+let tenthPaper = new Paper(paper, 7500, 400, 32, 32, "", "", "")
+
+let papers = [firstPaper, secondPaper, thirdPaper, fourthPaper, fifthPaper, sixthPaper, seventhPaper, eighthPaper]
+
+function updatePapers() {
+  papers.forEach(paper => {
+    paper.newPos()
+    if (paper.x + paper.speedX < 10) {
+      backgroundImage.speed = 0
+
+    }
+    paper.draw()
+  })
+
+}
+
+function pickPaper() {
+  let status = papers.some((paper) => {
+    return player.crash(paper)
+  })
+
+
+
+  if (status) {
+    if (!paperStatus) {
+
+      drawQuestion()
+
     }
   }
-  
-  let question = document.querySelector(".question")
-  let rightButton = document.querySelector("#right-button")
-  let leftButton = document.querySelector("#left-button")
-  let questionDiv = document.querySelector("#question-div")
-  let buttonsDiv = document.querySelector("#buttons-div")
-  square.style.display = "none"
-  let result = document.querySelector("#result")
+}
+
+let question = document.querySelector(".question")
+let rightButton = document.querySelector("#right-button")
+let leftButton = document.querySelector("#left-button")
+let questionDiv = document.querySelector("#question-div")
+let buttonsDiv = document.querySelector("#buttons-div")
+square.style.display = "none"
+let result = document.querySelector("#result")
 let paperStatus = false
 
 let correctAnswer
@@ -320,25 +323,27 @@ buttons.forEach(button => {
 
 function drawQuestion() {
   paperStatus = true
+
   
-  console.log("desenhando")
-  console.log(papers)
   updateButtons()
-  
-  
+
+
   question.innerHTML = papers[0].phrase
-  square.style.display = "flex"
-  questionDiv.style.display = "flex"
-  buttonsDiv.style.display = "flex"
-  
-  
-  
-  
+  if (!end) {
+
+    square.style.display = "flex"
+    questionDiv.style.display = "flex"
+    buttonsDiv.style.display = "flex"
+  }
+
+
+
+
 }
 
 function checkAnswer(alternative) {
-  console.log(alternative)
   
+
   if (papers[0].correctAnswer === alternative) {
     showResult(true)
     if (papers.length > 3) firstBoss.hp -= 0
@@ -348,16 +353,16 @@ function checkAnswer(alternative) {
     showResult(false)
     if (papers.length > 3) player.hp -= 1
     else { player.hp -= 5 }
-    
+
   }
-  
-  
-  
-  
+
+
+
+
 }
 
 function showResult(boolean) {
-  
+
   questionDiv.style.display = "none"
   buttonsDiv.style.display = "none"
   result.style.display = "flex"
@@ -367,38 +372,38 @@ function showResult(boolean) {
   } else {
     result.style.color = "red"
     result.innerHTML = "¡Incorrecto!"
-    
+
   }
-  
+
   setTimeout(() => {
-    
+
     square.style.display = "none"
     result.style.display = "none"
-    
+
     paperStatus = false
     checkResult()
     if (papers.length < 4 && player.hp > 0) drawQuestion()
-    console.log(papers)
-}, 2000)
-papers.shift()
+   
+  }, 2000)
+  papers.shift()
 
 }
 
 function updateButtons() {
   correctAnswer = papers[0].correctAnswer
   wrongAnswer = papers[0].wrongAnswer
-  
+
   let answers = [correctAnswer, wrongAnswer]
-  
+
   let e = Math.floor(Math.random() * answers.length)
-  
+
   leftButton.innerHTML = answers[e]
   answers.splice(answers.indexOf(answers[e]), 1)
-  
+
   let o = Math.floor(Math.random() * answers.length)
-  
+
   rightButton.innerHTML = answers[o]
-  
+
 }
 
 
@@ -412,7 +417,7 @@ function updateHp() {
   game.ctx.fillRect(142, 41, 7, 2)//embaixo bico
   game.ctx.fillRect(142, 28, 2, 17)//direita
   game.ctx.fillRect(60, 45, 84, 2)//embaixo
-  
+
   if (player.hp > 2) game.ctx.fillStyle = "orange"
   if (player.hp > 4) game.ctx.fillStyle = "yellow"
   if (player.hp > 6) game.ctx.fillStyle = "green"
@@ -428,7 +433,7 @@ function updateHp() {
   game.ctx.fillRect(118, 30, 1, 15)
   game.ctx.fillRect(126, 30, 1, 15)
   game.ctx.fillRect(134, 30, 1, 15)
-  
+
   game.ctx.fillRect(142, 30, 1, 15)//...10
 
 
@@ -493,7 +498,7 @@ const backgroundImage = {
 
 function updateCanvas() {
   backgroundImage.move();
-  
+
 
   game.ctx.clearRect(0, 0, game.width, game.height);
   if (player.x + player.speedX > 350 && !paperStatus) {
@@ -535,8 +540,8 @@ function updateCanvas() {
 
 
 // start calling updateCanvas once the image is loaded
-let start= document.querySelector("#start")
-start.onclick = ()=>{
+let start = document.querySelector("#start")
+start.onclick = () => {
   start.style.display = "none"
   blackSquare.style.backgroundColor = `rgba(0, 0, 0, 0)`
   updateCanvas()
@@ -577,9 +582,7 @@ function dispara(pCordenadas) {
   let lValorX = pCordenadas.pageX - canvas.offsetLeft;
   let lValorY = pCordenadas.pageY - canvas.offsetTop;
 
-  console.log(lValorX)
-  console.log(lValorY)
-  console.log(pCordenadas)
+ 
   //const lDiferencaY = lValorY > 202 ? lValorY - 202 : lValorY; 
   //const lDiferencaX = lValorX > 302 ? lValorX - 302 : lValorX;
 
