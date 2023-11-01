@@ -133,7 +133,7 @@ function checkResult() {
     square.style.display = "none"
     setTimeout(() => {
       text1.innerHTML = "¡Felicidades, ganaste!"
-      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini, Lucas Gentil e Márcio."
+      text2.innerHTML = "Hecho por:<br>Dirceu, Eduardo, Enrico, Giovani,<br>Leonardo, Lucas antonini e Lucas Gentil."
       clearInterval(interval)
     }, 2000)
     interval = setInterval(() => {
